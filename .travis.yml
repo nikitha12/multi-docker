@@ -1,0 +1,22 @@
+sudo : required
+services:
+    - docker
+
+before_install:
+    - docker build -t nikkinimba/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run nikkinimba/react-test npm test -- --coverage
+
+after_sucess:
+    - docker build nikkinimba/multi-client ./client
+    - docker build nikkinimba/multi-nginx ./nginx
+    - docker build nikkinimba/multi-server ./server
+    - docker build nikkinimba/multi-worker ./worker
+# Log in to docker CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# Take images and push to docker hub 
+- docker push nikkinimba/multi-client
+- docker push ikkinimba/multi-nginx
+- docker push nikkinimba/multi-server
+- docker push nikkinimba/multi-worker
