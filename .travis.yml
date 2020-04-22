@@ -10,10 +10,10 @@ script:
     - docker run nikkinimba/react-test npm test -- --coverage
 
 after_success:
-    - docker build nikkinimba/multi-client ./client
-    - docker build nikkinimba/multi-nginx ./nginx
-    - docker build nikkinimba/multi-server ./server
-    - docker build nikkinimba/multi-worker ./worker
+    - docker build -t nikkinimba/multi-client ./client
+    - docker build -t nikkinimba/multi-nginx ./nginx
+    - docker build -t nikkinimba/multi-server ./server
+    - docker build -t nikkinimba/multi-worker ./worker
 # Log in to docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # Take images and push to docker hub 
