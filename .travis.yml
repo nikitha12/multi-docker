@@ -7,7 +7,7 @@ before_install:
     - docker build -t nikkinimba/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true USERNAME/react-test npm test
+    - docker run nikkinimba/react-test npm test -- --coverage
 
 after_success:
     - docker build nikkinimba/multi-client ./client
